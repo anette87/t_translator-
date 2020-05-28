@@ -3,4 +3,4 @@
 require_relative '../environment'
 
 cli_i = CLI.new
-cli_i.start
+cli_i.welcome

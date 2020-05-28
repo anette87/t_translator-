@@ -1,4 +1,38 @@
-class Scraping
-    #make calls to the website we'll use for scaping
 
-end 
+class Scraping
+      
+    
+    def scraping_phrases
+        url = "https://www.rocketlanguages.com/spanish/phrases/spanish-travel-phrases"
+        doc = Nokogiri::HTML(open(url))
+        phrases = doc.css('.lesson-component ul')[0].text.split(/\n\t/).reject { |e| e == ""}
+        p_hash = {}
+        phrases.each_with_index do |phrase, i|
+            phrase_s = phrase.split("-")
+            p_hash[i+=1] = Translation.new(phrase_s[1],phrase_s[0],"phrase") 
+        end 
+    end 
+    
+    def scraping_term
+        url = "https://www.ailmalaga.com/the-vocabulary-of-the-airport-in-spanish/"
+        doc = Nokogiri::HTML(open(url))
+        terms = doc.css(".fusion-text").css("p")[4].children.map { |element| element.text }.reject { |e| e == " " || e == "" }
+        from_array_to_hash = {}
+        terms.each_slice(2) {|k,v| from_array_to_hash[k]=v}
+        terms_hash = {}
+        from_array_to_hash.each_with_index do |(k,v),i|
+            terms_hash[i+=1] = Translation.new(v,k,"term") 
+        end  
+    end          
+end  
+
+# First Code scraping_phrases: 
+# phrase.split( " - ")
+                            #  = Phrase.new('english', 'spanish')
+
+            # {1=> phease_instance, 2=> phrase_instance}
+            # trans_hash[1].english => 'english'
+            # trans_hash[1].spanish => 'spanish'
+            # trans_hash[1][0] == trans_hash[1].english
+        # end
+        # trans_hash
