@@ -8,31 +8,38 @@ class CLI
         puts "Would you like to translate a term or a phrase?".blue 
         puts "Please, enter 'term' or 'phrase' to select. To quit enter 'exit'".blue 
         user_input = gets.strip.downcase
+        start
         until user_input == "exit" 
             if user_input == "term"
-               terms
-               puts "Would you like to translate a term or a phrase?".blue 
-               puts "Please, enter 'term' or 'phrase' to select. To quit enter 'exit'".blue 
+                terms
+                puts "Would you like to translate a term or a phrase?".blue 
+                puts "Please, enter 'term' or 'phrase' to select. To quit enter 'exit'".blue 
             elsif user_input == "phrase"
-               phrases
-               puts "Would you like to translate a term or a phrase?".blue 
-               puts "Please, enter 'term' or 'phrase' to select. To quit enter 'exit'".blue 
+                phrases
+                puts "Would you like to translate a term or a phrase?".blue 
+                puts "Please, enter 'term' or 'phrase' to select. To quit enter 'exit'".blue 
             else 
-               puts "Sorry, '#{user_input}' it's not valid option. Please enter 'phrase' or 'term' to select.".red
+                puts "Sorry, '#{user_input}' it's not valid option. Please enter 'phrase' or 'term' to select.".red
             end 
             user_input = gets.strip.downcase
         end 
     end 
 
+    def start
+        Scraping.new.scraping_phrases
+        Scraping.new.scraping_term
+    end 
+
     def terms
         puts "Choose a term".blue
-        Scraping.new.scraping_term
         terms = Translation.terms 
         options(terms)
         user_input = gets.strip.downcase
         until user_input == "back to menu" || user_input == "menu" || user_input == "back"
-            object = terms[user_input.to_i]
-            translations(object)
+            object = terms[user_input.to_i-1]
+            if user_input.to_i > 0 && object != nil
+                translations(object)
+            end 
             directions
             user_input = gets.strip.downcase
         end
@@ -40,13 +47,14 @@ class CLI
       
     def phrases
         puts "Choose a phrase".blue
-        Scraping.new.scraping_phrases
         phrases = Translation.phrases
         options(phrases)
         user_input = gets.strip.downcase
         until user_input == "back to menu" || user_input == "menu" || user_input == "back"
-            object = phrases[user_input.to_i]
-            translations(object)
+            object = phrases[user_input.to_i-1]
+            if user_input.to_i > 0 && object != nil
+                translations(object)
+            end 
             directions
             user_input = gets.strip.downcase
         end
@@ -62,28 +70,26 @@ class CLI
     end 
 
     def translations(object)
-            puts "+ + + + + + + + + + + + + + + + + + + + + + + + +".green
-            puts "'#{object.english}' = '#{object.spanish}'".green
-            puts "+ + + + + + + + + + + + + + + + + + + + + + + + +".green   
+        puts "+ + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + +".green
+        puts "'#{object.english}' = '#{object.spanish}'".green
+        puts "+ + + + + + + + + + + + + + + + + + + + + + + + + + + + + + + +".green   
     end 
 
     def directions
-            puts ""
-            puts ""
-            puts ""
-            puts " ____________________________________".red
-            puts "|                                    |".red
-            puts "|Choose a new and valid entry number |".red
-            puts "|      or enter 'back to menu'       |".red
-            puts "|____________________________________|".red 
-            puts ""
-            puts ""
-            puts ""
+        puts ""
+        puts ""
+        puts ""
+        puts " ____________________________________".red
+        puts "|                                    |".red
+        puts "|Choose a new and valid entry number |".red
+        puts "|      or enter 'back to menu'       |".red
+        puts "|____________________________________|".red 
+        puts ""
+        puts ""
+        puts ""
     end
 
     def banner
-
-     
         puts "                                  ___   ___   ___   ________   ___  ________    ___".green 
         puts "                                  | |   | |   | |   | |  | |   | |  | |  | |    | |".green 
         puts "                                  | |   | |   | |   | |__| |   | |  | |__| |    | |".green 
@@ -97,6 +103,8 @@ class CLI
         puts "                                  Viaja! -> A English/Spanish basic travel translator".green
         puts "" 
     end 
+
+    
         
 
     
