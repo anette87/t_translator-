@@ -26,13 +26,7 @@ class CLI
         options(terms)
         user_input = gets.strip.downcase
         until user_input == "back to menu" || user_input == "menu"
-            terms.each_with_index do |object, i| 
-                if user_input == "#{i+=1}"
-                    puts "+ + + + + + + + + + + + + + + + + + + + + + + + +"
-                    puts "'#{object.english}' = '#{object.spanish}'"
-                    puts "+ + + + + + + + + + + + + + + + + + + + + + + + +"
-                end
-            end
+            translations(terms, user_input)
             directions
             user_input = gets.strip.downcase
         end
@@ -45,13 +39,7 @@ class CLI
         options(phrases)
         user_input = gets.strip.downcase
         until user_input == "back to menu" || user_input == "menu"
-            phrases.each_with_index do |object, i| 
-                if user_input == "#{i+=1}"
-                    puts "+ + + + + + + + + + + + + + + + + + + + + + + + +"
-                    puts "'#{object.english}' = '#{object.spanish}'"
-                    puts "+ + + + + + + + + + + + + + + + + + + + + + + + +"
-                end
-            end
+            translations(phrases,user_input)
             directions
             user_input = gets.strip.downcase
         end
@@ -59,10 +47,21 @@ class CLI
 
     def options(input)
         input.each_with_index do |object, i| 
-        puts "- - - - - - - - - - - - - - - - - - - - - - - - -"
-        puts " '#{object.english}' Press #{i+=1}" 
-        puts "- - - - - - - - - - - - - - - - - - - - - - - - -"
-        puts ""
+            puts "- - - - - - - - - - - - - - - - - - - - - - - - -"
+            puts " '#{object.english}' Press #{i+=1}" 
+            puts "- - - - - - - - - - - - - - - - - - - - - - - - -"
+            puts ""
+        end 
+    end 
+
+    def translations(category, user_input)
+        category.each_with_index do |object, i| 
+            if user_input == "#{i+=1}"
+                puts "+ + + + + + + + + + + + + + + + + + + + + + + + +"
+                puts "'#{object.english}' = '#{object.spanish}'"
+                puts "+ + + + + + + + + + + + + + + + + + + + + + + + +"
+            end
+        end
     end 
 
     def directions
@@ -81,7 +80,7 @@ class CLI
 
     
 end 
-end 
+
     
 
 
