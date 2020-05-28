@@ -26,13 +26,3 @@ class Scraping
     end          
 end  
 
-# First Code scraping_phrases: 
-# phrase.split( " - ")
-                            #  = Phrase.new('english', 'spanish')
-
-            # {1=> phease_instance, 2=> phrase_instance}
-            # trans_hash[1].english => 'english'
-            # trans_hash[1].spanish => 'spanish'
-            # trans_hash[1][0] == trans_hash[1].english
-        # end
-        # trans_hash
