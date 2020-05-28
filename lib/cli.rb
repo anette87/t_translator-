@@ -30,8 +30,9 @@ class CLI
         terms = Translation.terms 
         options(terms)
         user_input = gets.strip.downcase
-        until user_input == "back to menu" || user_input == "menu"
-            translations(terms, user_input)
+        until user_input == "back to menu" || user_input == "menu" || user_input == "back"
+            object = terms[user_input.to_i]
+            translations(object)
             directions
             user_input = gets.strip.downcase
         end
@@ -44,7 +45,8 @@ class CLI
         options(phrases)
         user_input = gets.strip.downcase
         until user_input == "back to menu" || user_input == "menu" || user_input == "back"
-            translations(phrases,user_input)
+            object = phrases[user_input.to_i]
+            translations(object)
             directions
             user_input = gets.strip.downcase
         end
@@ -59,14 +61,10 @@ class CLI
         end 
     end 
 
-    def translations(category, user_input)
-        category.each_with_index do |object, i| 
-            if user_input == "#{i+=1}"
-                puts "+ + + + + + + + + + + + + + + + + + + + + + + + +".green
-                puts "'#{object.english}' = '#{object.spanish}'".green
-                puts "+ + + + + + + + + + + + + + + + + + + + + + + + +".green
-            end
-        end
+    def translations(object)
+            puts "+ + + + + + + + + + + + + + + + + + + + + + + + +".green
+            puts "'#{object.english}' = '#{object.spanish}'".green
+            puts "+ + + + + + + + + + + + + + + + + + + + + + + + +".green   
     end 
 
     def directions
@@ -76,7 +74,7 @@ class CLI
             puts " ____________________________________".red
             puts "|                                    |".red
             puts "|Choose a new and valid entry number |".red
-            puts "|      or enter 'back to menu'        |".red
+            puts "|      or enter 'back to menu'       |".red
             puts "|____________________________________|".red 
             puts ""
             puts ""
